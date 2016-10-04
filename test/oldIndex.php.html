@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="test/bootstrap.min.css">
+    <style>
+        .but {
+            text-align: center;
+        }
+        
+        .edit {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 2px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .insert {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 40px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .pdf {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 40px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        
+        .pop {
+            display: none;
+        }
+        
+        .content {
+            border-radius: 0px;
+            box-shadow: 0 0 20px #FFFFFF;
+            padding-top: 10px;
+            padding-left: 30px;
+            padding-right: 30px;
+            background-color: #FFFFFF;
+            min-width: 808px;;
+        }
+        
+        table.tc {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        table.tc td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        table.tc th {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: center;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        table.tc tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+        
+        table.tc tr:hover {
+            background-color: #ddd;
+        }
+        
+        
+
+
+        .frm {
+            text-align: left;
+        }
+        
+        .but {
+            text-align: center;
+        }
+        
+        .sub {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: 6px 3px;
+            cursor: pointer;
+        }
+        
+        input.same_width {
+            width: 100%;
+            height: 27px;
+            border: 2px solid #cbcbcb;
+            border-bottom-right-radius: 7px;
+            border-top-right-radius: 7px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 8px #4CAF50;
+        }
+    </style>
+
+
+    <script>
+        ;
+(function ($) {
+    $(function () {
+
+        $('.edit').bind('click', function (e) {
+            var id = this.id;
+            var actionType = 'update';
+            $('.pop').bPopup({
+                contentContainer: '.content'
+            });
+        });
+        $('.insert').bind('click', function (e) {
+            var id = this.id;
+            var actionType = 'insert';
+            $('.pop').bPopup({
+                contentContainer: '.content'
+            });
+        });
+
+
+    });
+
+})(jQuery);
+        
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        function validateForm() {
+            var type = getUrlParameter('type');
+//            alert(type);
+//            var id = $('#test').val();
+//            alert(id);
+
+            if (type == 'update') {
+                var x = document.forms["updateForm"]["Date"].value;
+                var y = document.forms["updateForm"]["Time"].value;
+                var z = document.forms["updateForm"]["Course"].value;
+                var a = document.forms["updateForm"]["instructor"].value;
+                var b = document.forms["updateForm"]["invigilator_1"].value;
+                var c = document.forms["updateForm"]["invigilator_2"].value;
+                var d = document.forms["updateForm"]["invigilator_3"].value;
+                var e = document.forms["updateForm"]["invigilator_4"].value;
+
+                if (x == null || x == "" || y == null || y == "" || z == null || z == "" || a == null || a == "" || b == null || b == "" || c == null || c == "" || d == null || d == "" || e == null || e == "") {
+
+                    alert("GREEN BORDERED FIELDS CAN NOT BE LEFT EMPTY !!");
+                    return false;
+                }
+            }
+            if (type == 'insert') {
+                var x = document.forms["insertForm"]["Date"].value;
+                var y = document.forms["insertForm"]["Time"].value;
+                var z = document.forms["insertForm"]["Course"].value;
+
+                if (x == null || x == "" || y == null || y == "" || z == null || z == "") {
+                    alert("MAKE SURE NO FIELD IS EMPTY !!");
+                    return false;
+                }
+            }
+
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <div class="pop">
+        <div class="content">
+
+        <div class="frm">
+            <form name="updateForm" onsubmit="return validateForm()" action="../ExamRoutine/action/updateRoutine.php" method='POST'>
+
+                <h4>Date:</h4>
+                <input type="date" class="same_width" name='Date' value="<?php echo $date; ?>" placeholder="Enter Date ( NOT EMPTY )">
+                <br>
+                <h4>Time:</h4>
+                <input type="time" class="same_width" name='Time' value="<?php echo $time; ?>" placeholder="Enter Time ( NOT EMPTY )">
+                <br>
+                <h4>Course:</h4>
+                <input type="text" class="same_width" name='Course' value="<?php echo $course; ?>" placeholder="Enter Course Code Ex. CSE 334 ( NOT EMPTY )">
+                <br>
+                <h4>Instructor:</h4>
+                <input type="text" class="same_width" name="instructor" value="<?php echo $inst; ?>" placeholder="Employee Code of The Instructor Ex. SNM ( NOT EMPTY )">
+                <br>
+                <h4>Invigilator 1:</h4>
+                <input type="text" class="same_width" name="invigilator_1" value="<?php echo $inv1; ?>" placeholder="Employee Code of One Invigilator  Ex. BPC ( NOT EMPTY )">
+                <br>
+                <h4>Invigilator 2:</h4>
+                <input type="text" class="same_width" name="invigilator_2" value="<?php echo $inv2; ?>" placeholder="Employee Code of One Invigilator  Ex. SI ( NOT EMPTY )">
+                <br>
+                <h4>Invigilator 3:</h4>
+                <input type="text" class="same_width" name="invigilator_3" value="<?php echo $inv3; ?>" placeholder="Employee Code of One Invigilator  Ex. HAC">
+                <br>
+                <h4>Invigilator 4:</h4>
+                <input type="text" class="same_width" name="invigilator_4" value="<?php echo $inv4; ?>" placeholder="Employee Code of One Invigilator  Ex. MSC">
+                <br>
+                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                <br>
+                <div class="but">
+                    <button class="sub" type='submit'>SUBMIT</button>
+                </div>
+
+                <br>
+            </form>
+        </div>
+
+            <div class="frm">
+                <form name="insertForm" onsubmit="return validateForm()" action="../ExamRoutine/action/insertRoutine.php" method='POST'>
+
+                    <h4>Date:</h4>
+                    <input type="date" class="same_width" name='Date' placeholder="Enter Date ( NOT EMPTY )">
+                    <br>
+                    <h4>Time:</h4>
+                    <input type="time" class="same_width" name='Time' placeholder="Enter Time ( NOT EMPTY )">
+                    <br>
+                    <h4>Course:</h4>
+                    <input type="text" id='test' class="same_width" name='Course' placeholder="Enter Course Code Ex. CSE 334 ( NOT EMPTY )">
+                    <br>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    <br>
+                    <div class="but">
+                        <button class="sub" type='submit'>SUBMIT</button>
+                    </div>
+
+                    <br>
+                </form>
+            </div>
+
+            <?php
+            $conn->close();
+            
+       
+    ?>
+
+          
+            
+            
+            
+        </div>
+    </div>
+    
+    
+    
+    
+    
+
+    <h2 style="text-align:center" , "font-size:300%;"> Dept. of Computer Science and Engineering
+    <br>Invigilation Routine<br>
+    </h2>
+    <p style="text-align:center; font-size:18px">Final Examination 2016 (Semester January-June 2015)</p>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.bpopup.min.js"></script>
+    <script src="js/custom.js"></script>
+</body>
+
+
+<?php
+    $db_servername = 'localhost';
+    $db_username = 'root';
+    $db_password = '';
+    $db_name = 'examroutine';
+
+    $conn = new mysqli($db_servername, $db_username, $db_password, $db_name);
+
+    if($conn->connect_error){
+        die('Connection failed: ' . $conn->connect_error);
+    }
+//    echo "Connected successfully";
+
+
+    $sql = "SELECT * FROM `exam_routine` JOIN `invigilators` WHERE `exam_routine`.`exam_routine_id` = `invigilators`.`exam_routine_id` ORDER BY exam_date;";
+    
+    $result = $conn->query($sql);
+    echo "<table class= 'tc' align = 'center' id = 'routine'>";
+    
+    if($result->num_rows > 0){
+?>
+
+    <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Room no.</th>
+        <th>Course no.</th>
+        <th>Semester</th>
+        <th>Dept</th>
+        <th>Instructor</th>
+        <th>Invigilator
+            <br>Gallery 1</th>
+        <th>Invigilator
+            <br>Gallery 2</th>
+        <th>Edit</th>
+    </tr>
+
+    <?php
+        date_default_timezone_set("Asia/Dhaka");
+        $datetime = new DateTime('tomorrow');
+        $d = $datetime->format('Y-m-d');
+        $breakVal = 0;
+        
+        while($row = $result->fetch_assoc()){
+            $date = $row['exam_date'];
+            $time = $row['time'];
+            if($row['room_2_id'] != NULL)
+                $room = 'Gallery 1, 2';
+            else
+                $room = 'Gallery 1';
+            $course = $row['course_code'];
+            $sem = $row['semester'];
+            $dept = $row['dept'];
+            
+            $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['instructor_id'] ;
+            $i = $conn->query($sql);
+            $x = $i->fetch_assoc();            
+            $c_i = $x['employee_code'];
+            
+            $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['invigilator1'] ;
+            $i = $conn->query($sql);
+            $x = $i->fetch_assoc();
+            $i_11 = $x['employee_code'];
+            
+            $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['invigilator2'] ;
+            $i = $conn->query($sql);
+            $x = $i->fetch_assoc();
+            $i_12 = $x['employee_code'];
+            
+            $ig1 = $i_11. ', ' .$i_12;
+            
+            if($row['invigilator3'] != NULL && $row['invigilator4'] == NULL){
+                $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['invigilator3'] ;
+                $i = $conn->query($sql);
+                $x = $i->fetch_assoc();
+                $ig_2 = $x['employee_code'];
+            }
+            else if($row['invigilator4'] != NULL && $row['invigilator3'] == NULL){
+                $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['invigilator4'] ;
+                $i = $conn->query($sql);
+                $x = $i->fetch_assoc();
+                $ig_2 = $x['employee_code'];
+            }
+            else if($row['invigilator4'] != NULL && $row['invigilator3'] != NULL){
+                $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['invigilator4'] ;
+                $i = $conn->query($sql);
+                $x = $i->fetch_assoc();
+                $i_21 = $x['employee_code'];
+                $sql = 'SELECT employee_code FROM `teacher` WHERE instructor_id = ' .$row['invigilator3'] ;
+                $i = $conn->query($sql);
+                $x = $i->fetch_assoc();
+                $i_22 = $x['employee_code'];
+                
+                $ig_2 = "{$i_21}, {$i_22}";
+            }
+            else if($row['invigilator4'] == NULL && $row['invigilator3'] == NULL){
+                $ig_2 = '-----';
+            }
+            
+            
+//            if($row['room_2_id'] != NULL){                
+//                $ig2 = $i_21. ', ' .$i_22;
+//            }else $ig2 = NULL;
+            
+            
+            echo '<tr>';
+            echo '<td>'. $date . '</td>';
+            echo '<td>'. $time . '</td>';
+            echo '<td>'. $room . '</td>';
+            echo '<td>'. $course . '</td>';
+            echo '<td>'. $sem . '</td>';
+            echo '<td>'. $dept . '</td>';
+            echo '<td>'. $c_i . '</td>';
+            echo '<td>'. $ig1 . '</td>';
+            echo '<td>'. $ig_2 . '</td>';
+            
+            if($date >= $d){                
+                echo '<td><button class="edit" type="button" id = "'. $row['exam_routine_id'] .'">Edit</button></td>';
+            }
+            echo '</tr>';
+            
+            $idIns = $row['exam_routine_id'] + 1;
+            
+        }
+    }
+       echo '</table>';
+//    echo "<button class = 'insert' type = 'button' id = '{}'>"
+//    echo '<br><br><div class="but"><button class="insert" type="button" id="'.$idIns.'">ADD EXAM</button></div>' ;
+?>
+
+        <body>
+            <br>
+            <div class="but">
+<!--                <button  class="pdf" onclick="window.location.href='generatePdf.php'" type="button">DOWNLOAD</button>-->
+                <button class="insert" type="button" id="'.$idIns.'">ADD EXAM</button>
+                <input type="button" class="pdf" value="DOWNLOAD" onclick="window.open('generatePdf.php')" />
+
+            </div>
+        </body>
+
+
+        <?php
+    $conn->close();
+?>
+
+
+</html>

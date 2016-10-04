@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>validate test</title>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('input[type="text"]').keyup(function () {
+                if ($(this).val() != '') {
+                    $('input[type="submit"]').prop('disabled', false);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+
+    <input type="text" name="textField" />
+    <input class="prop" type="submit" value="send" onclick="window.open('http://google.com') " />
+
+    <script src="../js/jquery.min.js"></script>
+</body>
+
+</html>
