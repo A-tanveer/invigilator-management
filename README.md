@@ -1,4 +1,5 @@
 # invigilator-management
+  - Academic work, please do not copy
 
 This project can be used to create and maintain exam routin and assaign & customise invigilator for exams.
 Invigilators assigned will be notified via email the day before. i used sendgrid API for email and windows sceduler to automate the process.
